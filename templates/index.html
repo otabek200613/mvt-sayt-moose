@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  {% include 'navbar.html' %}
+
+  <section class="hero-wrap py-md-4">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters justify-content-center slider-text align-items-center" data-scrollax-parent="true">
+
+        {% if home %}
+          <div class="col-md-10 ftco-animate py-5">
+            <h1 class="text-center">
+              {{ home.name_part1|capfirst }}<span>{{ home.name_part2 }}</span>{{ home.name_part3 }}
+            </h1>
+
+            <div class="row pb-md-5">
+              <div class="col-md-8">
+                <h2>{{ home.bio_title|capfirst }}</h2>
+                <p>{{ home.bio_content|capfirst }}</p>
+              </div>
+
+              <div class="col-md-4">
+                <div class="author">
+                  <div class="img" style="background-image: url({{ home.photo.url }});"></div>
+                  <div class="text">
+                    <h3>{{ home.full_name|title }}</h3>
+                    <p>{{ home.description|capfirst }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </section>
+
+  <section class="ftco-section ftco-no-pb ftco-no-pt">
+    <div class="container-fluid px-md-4">
+
+      <div class="row no-gutters">
+        {% for a in articles_last4 %}
+          <div class="col-md-12 blog-wrap {% if forloop.counter|divisibleby:2 %}bg-darken{% endif %}">
+            <div class="row no-gutters align-items-center">
+
+              <div class="col-md-6 img img-blog js-fullheight {% if forloop.counter|divisibleby:2 %}order-md-last{% endif %}"
+                   style="background-image: url({{ a.image.url }});">
+              </div>
+
+              <div class="col-md-6">
+                <div class="text p-md-5 py-5 px-4 ftco-animate">
+
+                  <p class="meta">
+                    <a href="{% url 'blog_single' a.pk %}">
+                      <span class="fa fa-calendar mr-2"></span>{{ a.created|date:"M. d, Y" }}
+                    </a>
+
+                    <a href="{% url 'blog_single' a.pk %}">
+                      <span class="fa fa-user mr-2"></span>Admin
+                    </a>
+
+                    <a href="{% url 'blog_single' a.pk %}" class="meta-chat">
+                      <span class="fa fa-comment mr-2"></span>{{ a.published_comments_count }}
+                    </a>
+                  </p>
+
+                  <h2 class="mb-4">
+                    <a href="{% url 'blog_single' a.pk %}">{{ a.title }}</a>
+                  </h2>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        {% empty %}
+          <div class="col-md-12 py-5 text-center">
+            <p>No articles found.</p>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="row py-5">
+        <div class="col-md-12 py-md-5 text-center">
+          <a href="/articles/" class="btn-custom-blog">
+            View all articles <span class="fa fa-chevron-right"></span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+{% endblock %}
