@@ -83,6 +83,6 @@ def blog_single(request, pk):
         'article': article,
         'comments': comments,
         'form': form,
-        'page_title': article.title,  # single page uchun zo‘r variant
+        'page_title': article.title,
     }
     return render(request, 'blog-single.html', ctx)
